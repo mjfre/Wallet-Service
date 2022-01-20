@@ -17,11 +17,26 @@ import java.util.List;
 @CrossOrigin
 public class WalletRecordController {
 
+    //CREATE
+
+    //ADD A RECORD
+
+    //ADD A LIST OF RECORDS
+
+    //READ
+
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @ApiOperation(value = "Get all Thor wallet records", response = ThorWalletRecord.class, responseContainer="List", notes="Permitted user roles: ADMIN")
     @GetMapping
     public List<ThorWalletRecord> getAllThorWalletRecords() {
         return null;
     }
+
+    //UPDATE
+
+    //ASSIGN A TERRA WALLET TO A THOR WALLET
+    //returns extant id if terra address already used
+
+    //DELETE
 
 }

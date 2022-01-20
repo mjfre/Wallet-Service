@@ -29,7 +29,7 @@ public class ApplicationUserController {
 
     //CREATE
 
-    @ApiOperation(value = "Add user", notes="Permitted user roles: ADMIN")
+    @ApiOperation(value = "Add user", notes="Permitted user roles: ADMIN - delete 'authorities' and 'granted authorities' sections if using example model")
     @PostMapping
     public int addApplicationUser(@RequestBody ApplicationUser user){
         return applicationUserService.addApplicationUser(user);
