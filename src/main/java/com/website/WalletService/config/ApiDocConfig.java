@@ -25,7 +25,7 @@ public class ApiDocConfig {
     private ApiInfo apiInfo() {
         Contact contact = new Contact("Matt Freedman", "https://www.jointheleague.org", "mjfre@aol.com");
         return new ApiInfoBuilder()
-                .title("Wallet Servicee")
+                .title("Wallet Service")
                 .description("Spring Boot API that stores and distributes Thor wallet addresses, given a Terra wallet address")
                 .contact(contact)
                 .build();
