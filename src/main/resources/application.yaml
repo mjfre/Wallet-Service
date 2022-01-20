@@ -1,0 +1,71 @@
+server:
+  port: 5000
+
+app:
+  datasource:
+    jdbc-url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    pool-size: 200
+
+application:
+  jwt:
+    secretKey: ${JWT_SECRET_KEY}
+    tokenPrefix: "Bearer "
+    tokenExpirationAfterDays: 14
+
+spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${EMAIL_USERNAME}
+    password: ${EMAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+          starttls:
+            enable: true
+
+pike13:
+  token1: ${PIKE13_TOKEN_1}
+  token2: ${PIKE13_TOKEN_2}
+  token3: ${PIKE13_TOKEN_3}
+  token4: ${PIKE13_TOKEN_4}
+  token5: ${PIKE13_TOKEN_5}
+  token6: ${PIKE13_TOKEN_6}
+  token7: ${PIKE13_TOKEN_7}
+  token8: ${PIKE13_TOKEN_8}
+  token9: ${PIKE13_TOKEN_9}
+  token10: ${PIKE13_TOKEN_10}
+
+github:
+  personalAccessToken: ${GITHUB_TOKEN}
+
+authenticationService:
+  url: ${AUTHENTICATION_SERVICE_URL}
+  username: ${AUTHENTICATION_SERVICE_USERNAME}
+  password: ${AUTHENTICATION_SERVICE_PASSWORD}
+
+logging:
+  level:
+    com:
+      leaguebackend: DEBUG
+  file:
+    name: logfile.log
+
+management:
+  endpoint:
+    health:
+      show-details: "ALWAYS"
+    scheduledtasks:
+      enabled: true
+    logfile:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health, httptrace, logfile
