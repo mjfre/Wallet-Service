@@ -41,6 +41,9 @@ Clone that project and set up your IntelliJ environment variables:
 In the “Environment” section
 - paste the environment member variable String into the “Environment Variables” text field.
 
+#### Environment Variables:
+- JWT_SECRET_KEY
+
 #### Setting spring profile in IntelliJ
 - Open the “Edit Configuration” menu.
 - In the Environment > VM Options text field, set the active profile to 'development':  

@@ -8,6 +8,12 @@ app:
     password: ${DB_PASSWORD}
     pool-size: 200
 
+application:
+  jwt:
+    secretKey: ${JWT_SECRET_KEY}
+    tokenPrefix: "Bearer "
+    tokenExpirationAfterDays: 14
+
 logging:
   level:
     com:
