@@ -53,10 +53,4 @@ public class ApplicationUserController {
         return applicationUserService.deleteApplicationUserByUsername(username);
     }
 
-    @ApiOperation(value = "Delete all users", notes="Permitted user roles: ADMIN")
-    @DeleteMapping(path = "/all")
-    public int deleteAllApplicationUsers(){
-        return applicationUserService.deleteAllApplicationUsers();
-    }
-
 }

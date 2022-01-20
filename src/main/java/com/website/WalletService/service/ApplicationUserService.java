@@ -50,25 +50,7 @@ public class ApplicationUserService implements UserDetailsService {
 
     //DELETE
     public int deleteApplicationUserByUsername(String username) {
-        if (username.equals("administrator")) {
-            throw new ApiRequestException("User \"" + username + "\" cannot be deleted");
-        }
         return applicationUserRepository.deleteUserByUsername(username);
-    }
-
-    public int deleteAllApplicationUsers() {
-        //get all users
-        List<ApplicationUser> allUsers = applicationUserRepository.selectAllApplicationUsers();
-        //for each user
-        int numRowsDeleted = 0;
-        for (ApplicationUser user : allUsers) {
-            String username = user.getUsername();
-            if (!username.equals("administrator")) {
-                //drop from table
-                numRowsDeleted += applicationUserRepository.deleteUserByUsername(username);
-            }
-        }
-        return numRowsDeleted;
     }
 
     List<ApplicationUserDO> applicationUserToApplicationUserDO(List<ApplicationUser> users) {
