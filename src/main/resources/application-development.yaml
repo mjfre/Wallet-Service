@@ -3,7 +3,7 @@ server:
 
 app:
   datasource:
-    jdbc-url: jdbc:postgresql://0.0.0.0:5432/league_database
+    jdbc-url: jdbc:postgresql://0.0.0.0:5432/wallet_database
     username: postgres
     password: password
     pool-size: 5
