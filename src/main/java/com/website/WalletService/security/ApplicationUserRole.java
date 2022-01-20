@@ -6,10 +6,8 @@ import java.util.Collections;
 import java.util.Set;
 
 public enum ApplicationUserRole {
-    STUDENT,
-    TEACHER,
     ADMIN,
-    SUPERUSER;
+    USER;
 
     public Set<SimpleGrantedAuthority> getGrantedAuthorities() {
         return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + this.name()));

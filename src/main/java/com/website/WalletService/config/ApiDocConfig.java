@@ -34,7 +34,11 @@ public class ApiDocConfig {
     @Bean
     public Docket api() {
         List<SecurityScheme> schemeList = new ArrayList<>();
+        schemeList.add(new ApiKey("JWT", HttpHeaders.AUTHORIZATION, "header"));
+
         List<SecurityContext> contextList = new ArrayList<>();
+        contextList.add(securityContext());
+
 
         return new Docket(DocumentationType.SWAGGER_2)
                 .produces(Collections.singleton("application/json"))
@@ -42,10 +46,30 @@ public class ApiDocConfig {
                 .securitySchemes(schemeList)
                 .securityContexts(contextList)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("org.jointheleague.api.survey.presentation"))
+                .apis(RequestHandlerSelectors.basePackage("com.website.WalletService.presentation"))
                 .paths(regex("/.*"))
                 .build()
                 .apiInfo(apiInfo());
+    }
+
+    private ApiKey apiKey() {
+        return new ApiKey("JWT", "Authorization", "header");
+    }
+
+    private SecurityContext securityContext() {
+        return SecurityContext.builder()
+                .securityReferences(defaultAuth())
+                .forPaths(regex("/.*"))
+                .build();
+    }
+
+    List<SecurityReference> defaultAuth() {
+        AuthorizationScope authorizationScope
+                = new AuthorizationScope("global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        return Lists.newArrayList(
+                new SecurityReference("JWT", authorizationScopes));
     }
 
 }

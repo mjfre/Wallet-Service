@@ -3,6 +3,7 @@ package com.website.WalletService.presentation;
 import com.website.WalletService.repository.dto.ThorWalletRecord;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,11 +17,11 @@ import java.util.List;
 @CrossOrigin
 public class WalletRecordController {
 
-//    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-//    @ApiOperation(value = "Get all Thor wallet records", response = ThorWalletRecord.class, responseContainer="List", notes="Permitted user roles: ADMIN")
-//    @GetMapping
-//    public List<ThorWalletRecord> getAllStudents() {
-//        return studentService.getAllStudents();
-//    }
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @ApiOperation(value = "Get all Thor wallet records", response = ThorWalletRecord.class, responseContainer="List", notes="Permitted user roles: ADMIN")
+    @GetMapping
+    public List<ThorWalletRecord> getAllThorWalletRecords() {
+        return null;
+    }
 
 }

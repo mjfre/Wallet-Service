@@ -13,10 +13,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+@Api(value = "/user", consumes = "application/json", produces = "application/json", tags={"Users"})
 @RestController
 @RequestMapping("user")
+@CrossOrigin
 @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-@Api(value = "/user", consumes = "application/json", produces = "application/json")
 public class ApplicationUserController {
 
     private final ApplicationUserService applicationUserService;
