@@ -2,7 +2,6 @@ package com.website.WalletService.presentation;
 
 import com.website.WalletService.domain.ApplicationUserDO;
 import com.website.WalletService.repository.dto.ApplicationUser;
-import com.website.WalletService.security.ApplicationUserRole;
 import com.website.WalletService.service.ApplicationUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -11,7 +10,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @Api(value = "/user", consumes = "application/json", produces = "application/json", tags={"Users"})
 @RestController
