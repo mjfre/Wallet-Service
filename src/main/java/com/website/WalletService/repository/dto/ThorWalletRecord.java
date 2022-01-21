@@ -17,4 +17,9 @@ public class ThorWalletRecord {
 
     String terraWalletAddress;
 
+    public ThorWalletRecord(String thorWalletAddress) {
+        this.id = UUID.randomUUID();
+        this.thorWalletAddress = thorWalletAddress;
+    }
+
 }
