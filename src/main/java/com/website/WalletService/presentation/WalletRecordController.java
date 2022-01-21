@@ -35,7 +35,7 @@ public class WalletRecordController {
     //ADD A LIST OF RECORDS
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @ApiOperation(value = "Add list of thor wallet addresses", notes="Permitted user roles: ADMIN")
-    @PostMapping(path = "/from/teachers")
+    @PostMapping(path = "/list")
     public int addThorWalletAddresses(@RequestBody List<String> thorWalletAddresses){
         return walletRecordService.addThorWalletAddresses(thorWalletAddresses);
     }
@@ -56,7 +56,7 @@ public class WalletRecordController {
     //returns extant id if terra address already used
     @PreAuthorize("permitAll()")
     @ApiOperation(value = "Assign Terra address to Thor address - returns extant record if terra address has previously been provided", response = ThorWalletRecord.class, notes="Permitted user roles: Permit All")
-    @GetMapping
+    @PutMapping
     public UUID assignTerraAddressToThorAddress(@RequestBody String terraWalletAddress) {
         return walletRecordService.assignTerraAddressToThorAddress(terraWalletAddress);
     }
@@ -64,8 +64,8 @@ public class WalletRecordController {
     //DELETE
 
     //DELETE THOR WALLET RECORD
-    @PreAuthorize("permitAll()")
-    @ApiOperation(value = "Delete a Thor wallet record", notes="Permitted user roles: ADMIN, SUPERUSER")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @ApiOperation(value = "Delete a Thor wallet record", notes="Permitted user roles: ADMIN")
     @DeleteMapping(path = "/{thorWalletRecordId}")
     public int deleteThorWalletRecord(@PathVariable UUID thorWalletRecordId) {
         return walletRecordService.deleteThorWalletRecord(thorWalletRecordId);

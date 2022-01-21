@@ -1,6 +1,8 @@
 package com.website.WalletService.repository;
 
+import com.website.WalletService.exception.ApiRequestException;
 import com.website.WalletService.repository.dto.ThorWalletRecord;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -9,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public class WalletRepository {
+public class WalletRecordRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -36,7 +38,7 @@ public class WalletRepository {
 
     final static String DELETE_THOR_WALLET_RECORD_BY_ID_SQL = "DELETE FROM thor_wallet_record WHERE id = ?";
 
-    public WalletRepository(JdbcTemplate jdbcTemplate) {
+    public WalletRecordRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -70,7 +72,12 @@ public class WalletRepository {
     }
 
     public String selectUnusedThorWalletAddress() {
-        return jdbcTemplate.queryForObject(SELECT_UNUSED_THOR_ADDRESS_SQL, mapThorWalletAddressFromDb());
+        try {
+            return jdbcTemplate.queryForObject(SELECT_UNUSED_THOR_ADDRESS_SQL, mapThorWalletAddressFromDb());
+        }
+        catch(EmptyResultDataAccessException e){
+            throw new ApiRequestException("There are no unassigned thor wallet addresses remaining");
+        }
     }
 
     //UPDATE

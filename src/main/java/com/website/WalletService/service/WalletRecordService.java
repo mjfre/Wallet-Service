@@ -1,7 +1,7 @@
 package com.website.WalletService.service;
 
 import com.website.WalletService.exception.ApiRequestException;
-import com.website.WalletService.repository.WalletRepository;
+import com.website.WalletService.repository.WalletRecordRepository;
 import com.website.WalletService.repository.dto.ThorWalletRecord;
 import org.springframework.stereotype.Service;
 
@@ -12,17 +12,17 @@ import java.util.stream.Collectors;
 @Service
 public class WalletRecordService {
 
-    private final WalletRepository walletRepository;
+    private final WalletRecordRepository walletRecordRepository;
 
-    public WalletRecordService(WalletRepository walletRepository) {
-        this.walletRepository = walletRepository;
+    public WalletRecordService(WalletRecordRepository walletRecordRepository) {
+        this.walletRecordRepository = walletRecordRepository;
     }
 
     //CREATE
 
     public int addThorWalletAddress(String thorWalletAddress) {
         ThorWalletRecord thorWalletRecord = new ThorWalletRecord(thorWalletAddress);
-        return walletRepository.insertThorWalletRecord(thorWalletRecord);
+        return walletRecordRepository.insertThorWalletRecord(thorWalletRecord);
     }
 
 
@@ -32,7 +32,7 @@ public class WalletRecordService {
 
         int numInserted = 0;
         for (ThorWalletRecord thorWalletRecord : thorWalletRecords) {
-            numInserted += walletRepository.insertThorWalletRecord(thorWalletRecord);
+            numInserted += walletRecordRepository.insertThorWalletRecord(thorWalletRecord);
         }
 
         return numInserted;
@@ -41,30 +41,27 @@ public class WalletRecordService {
     //READ
 
     public List<ThorWalletRecord> getAllThorWalletRecords() {
-        return walletRepository.selectAllThorWalletRecords();
+        return walletRecordRepository.selectAllThorWalletRecords();
     }
 
 
     public UUID assignTerraAddressToThorAddress(String terraWalletAddress) {
         //Check if terra wallet address was previously submitted
-        if (walletRepository.existsThorWalletRecord(terraWalletAddress)) {
-            return walletRepository.selectThorWalletRecordId(terraWalletAddress);
+        if (walletRecordRepository.existsThorWalletRecord(terraWalletAddress)) {
+            return walletRecordRepository.selectThorWalletRecordId(terraWalletAddress);
         }
 
         //Assign a thor wallet address to a new terra wallet address
-        String unusedThorWalletAddress = walletRepository.selectUnusedThorWalletAddress();
-
+        String unusedThorWalletAddress = walletRecordRepository.selectUnusedThorWalletAddress();
+        System.out.println(unusedThorWalletAddress);
         //If the terra wallet address is assigned to a thor wallet address
-        if (walletRepository.updateThorWalletRecord(unusedThorWalletAddress, terraWalletAddress) == 1) {
-            //Return the id for that record
-            return walletRepository.selectThorWalletRecordId(terraWalletAddress);
-        } else {
-            throw new ApiRequestException("There are no Thor wallet address let to assign");
-        }
+        walletRecordRepository.updateThorWalletRecord(unusedThorWalletAddress, terraWalletAddress);
+        //Return the id for that record
+        return walletRecordRepository.selectThorWalletRecordId(terraWalletAddress);
     }
 
     public int deleteThorWalletRecord(UUID thorWalletRecordId) {
-        return walletRepository.deleteThorWalletRecord(thorWalletRecordId);
+        return walletRecordRepository.deleteThorWalletRecord(thorWalletRecordId);
     }
 
 }
