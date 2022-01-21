@@ -10,11 +10,11 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class WalletService {
+public class WalletRecordService {
 
     private final WalletRepository walletRepository;
 
-    public WalletService(WalletRepository walletRepository) {
+    public WalletRecordService(WalletRepository walletRepository) {
         this.walletRepository = walletRepository;
     }
 
@@ -63,7 +63,7 @@ public class WalletService {
         }
     }
 
-    public int deleteThorWalletRecord(String thorWalletRecordId) {
+    public int deleteThorWalletRecord(UUID thorWalletRecordId) {
         return walletRepository.deleteThorWalletRecord(thorWalletRecordId);
     }
 

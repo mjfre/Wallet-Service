@@ -110,7 +110,7 @@ public class WalletRepository {
         };
     }
 
-    public int deleteThorWalletRecord(String thorWalletRecordId) {
+    public int deleteThorWalletRecord(UUID thorWalletRecordId) {
         return jdbcTemplate.update(DELETE_THOR_WALLET_RECORD_BY_ID_SQL, thorWalletRecordId);
     }
 

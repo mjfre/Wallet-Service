@@ -1,7 +1,7 @@
 package com.website.WalletService.presentation;
 
 import com.website.WalletService.repository.dto.ThorWalletRecord;
-import com.website.WalletService.service.WalletService;
+import com.website.WalletService.service.WalletRecordService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,10 +16,10 @@ import java.util.UUID;
 @CrossOrigin
 public class WalletRecordController {
 
-    private final WalletService walletService;
+    private final WalletRecordService walletRecordService;
 
-    public WalletRecordController(WalletService walletService) {
-        this.walletService = walletService;
+    public WalletRecordController(WalletRecordService walletRecordService) {
+        this.walletRecordService = walletRecordService;
     }
 
     //CREATE
@@ -28,16 +28,16 @@ public class WalletRecordController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @ApiOperation(value = "Add thor wallet address", notes="Permitted user roles: ADMIN")
     @PostMapping
-    public int addApplicationUser(@RequestBody String thorWalletAddress){
-        return walletService.addThorWalletAddress(thorWalletAddress);
+    public int addThorWalletAddress(@RequestBody String thorWalletAddress){
+        return walletRecordService.addThorWalletAddress(thorWalletAddress);
     }
 
     //ADD A LIST OF RECORDS
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @ApiOperation(value = "Add list of thor wallet addresses", notes="Permitted user roles: ADMIN")
     @PostMapping(path = "/from/teachers")
-    public int addTeachersAsApplicationUsers(@RequestBody List<String> thorWalletAddresses){
-        return walletService.addThorWalletAddresses(thorWalletAddresses);
+    public int addThorWalletAddresses(@RequestBody List<String> thorWalletAddresses){
+        return walletRecordService.addThorWalletAddresses(thorWalletAddresses);
     }
 
     //READ
@@ -47,7 +47,7 @@ public class WalletRecordController {
     @ApiOperation(value = "Get all Thor wallet records", response = ThorWalletRecord.class, responseContainer="List", notes="Permitted user roles: ADMIN")
     @GetMapping
     public List<ThorWalletRecord> getAllThorWalletRecords() {
-        return walletService.getAllThorWalletRecords();
+        return walletRecordService.getAllThorWalletRecords();
     }
 
     //UPDATE
@@ -58,7 +58,7 @@ public class WalletRecordController {
     @ApiOperation(value = "Assign Terra address to Thor address - returns extant record if terra address has previously been provided", response = ThorWalletRecord.class, notes="Permitted user roles: Permit All")
     @GetMapping
     public UUID assignTerraAddressToThorAddress(@RequestBody String terraWalletAddress) {
-        return walletService.assignTerraAddressToThorAddress(terraWalletAddress);
+        return walletRecordService.assignTerraAddressToThorAddress(terraWalletAddress);
     }
 
     //DELETE
@@ -67,8 +67,8 @@ public class WalletRecordController {
     @PreAuthorize("permitAll()")
     @ApiOperation(value = "Delete a Thor wallet record", notes="Permitted user roles: ADMIN, SUPERUSER")
     @DeleteMapping(path = "/{thorWalletRecordId}")
-    public int deleteSurveyEvent(@PathVariable String thorWalletRecordId) {
-        return walletService.deleteThorWalletRecord(thorWalletRecordId);
+    public int deleteThorWalletRecord(@PathVariable UUID thorWalletRecordId) {
+        return walletRecordService.deleteThorWalletRecord(thorWalletRecordId);
     }
 
 }

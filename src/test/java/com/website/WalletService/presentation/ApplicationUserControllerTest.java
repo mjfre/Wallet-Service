@@ -24,8 +24,7 @@ class ApplicationUserControllerTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.initMocks(this);
-
+        MockitoAnnotations.openMocks(this);
         applicationUserController = new ApplicationUserController(applicationUserService);
     }
 
