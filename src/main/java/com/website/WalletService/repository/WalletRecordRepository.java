@@ -15,7 +15,7 @@ public class WalletRecordRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    final String INSERT_THOR_WALLET_RECORD_SQL = "" +
+    static final String INSERT_THOR_WALLET_RECORD_SQL = "" +
             "INSERT INTO thor_wallet_record (" +
             " id, " +
             " thor_wallet_address," +
@@ -23,20 +23,20 @@ public class WalletRecordRepository {
             "VALUES (?, ?, ?)";
 
 
-    final String SELECT_ALL_THOR_WALLET_RECORDS_SQL = "SELECT * FROM student";
+    static final String SELECT_ALL_THOR_WALLET_RECORDS_SQL = "SELECT * FROM student";
 
-    final static String EXISTS_BY_TERRA_WALLET_ADDRESS_SQL = "SELECT EXISTS ( SELECT 1 FROM thor_wallet_record WHERE terra_wallet_address = ? )";
+    static final String EXISTS_BY_TERRA_WALLET_ADDRESS_SQL = "SELECT EXISTS ( SELECT 1 FROM thor_wallet_record WHERE terra_wallet_address = ? )";
 
-    final static String SELECT_ID_BY_TERRA_WALLET_ADDRESS_SQL = "SELECT id FROM thor_wallet_record WHERE terra_wallet_address = ?";
+    static final String SELECT_ID_BY_TERRA_WALLET_ADDRESS_SQL = "SELECT id FROM thor_wallet_record WHERE terra_wallet_address = ?";
 
-    final static String SELECT_UNUSED_THOR_ADDRESS_SQL = "SELECT thor_wallet_address FROM thor_wallet_record WHERE terra_wallet_address = null LIMIT 1";
+    static final String SELECT_UNUSED_THOR_ADDRESS_SQL = "SELECT thor_wallet_address FROM thor_wallet_record WHERE terra_wallet_address = null LIMIT 1";
 
-    final String UPDATE_TERRA_WALLET_ADDRESS_BY_THOR_WALLET_ADDRESS_SQL = "" +
+    static final String UPDATE_TERRA_WALLET_ADDRESS_BY_THOR_WALLET_ADDRESS_SQL = "" +
             "UPDATE thor_wallet_record " +
             "SET terra_wallet_address = ? " +
             "WHERE thor_wallet_address = ?";
 
-    final static String DELETE_THOR_WALLET_RECORD_BY_ID_SQL = "DELETE FROM thor_wallet_record WHERE id = ?";
+    static final String DELETE_THOR_WALLET_RECORD_BY_ID_SQL = "DELETE FROM thor_wallet_record WHERE id = ?";
 
     public WalletRecordRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -62,7 +62,7 @@ public class WalletRecordRepository {
     public Boolean existsThorWalletRecord(String terraWalletAddress) {
         return jdbcTemplate.queryForObject(
                 EXISTS_BY_TERRA_WALLET_ADDRESS_SQL,
-                (resultSet, columnIndex) -> resultSet.getBoolean(1),
+                mapBooleanFromDb(),
                 terraWalletAddress
         );
     }
@@ -89,9 +89,14 @@ public class WalletRecordRepository {
                 unusedThorWalletAddress);
     }
 
+    //DELETE
+
+    public int deleteThorWalletRecord(UUID thorWalletRecordId) {
+        return jdbcTemplate.update(DELETE_THOR_WALLET_RECORD_BY_ID_SQL, thorWalletRecordId);
+    }
 
     //ROWMAPPER
-    RowMapper<ThorWalletRecord> mapThorWalletRecordFromDb() {
+    public RowMapper<ThorWalletRecord> mapThorWalletRecordFromDb() {
         return (resultSet, i) -> {
             UUID id = UUID.fromString(resultSet.getString("id"));
             String thorWalletAddress = resultSet.getString("thor_wallet_address");
@@ -117,8 +122,8 @@ public class WalletRecordRepository {
         };
     }
 
-    public int deleteThorWalletRecord(UUID thorWalletRecordId) {
-        return jdbcTemplate.update(DELETE_THOR_WALLET_RECORD_BY_ID_SQL, thorWalletRecordId);
+    RowMapper<Boolean> mapBooleanFromDb() {
+        return (resultSet, columnIndex) -> resultSet.getBoolean(1);
     }
 
 }
