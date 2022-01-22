@@ -62,6 +62,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 //these two lines whitelist pages matching these patterns
                 .antMatchers(
                         "/login",
+                        "/wallet-record",
                         //swagger urls
                         "/",
                         "/swagger-ui.html",
