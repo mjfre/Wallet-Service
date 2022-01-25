@@ -51,6 +51,14 @@ public class WalletRecordController {
         return walletRecordService.getAllThorWalletRecords();
     }
 
+    //GET THOR WALLET ADDRESS BY RECORD ID
+    @PreAuthorize("permitAll()")
+    @ApiOperation(value = "Get all a Thor wallet address by record id", response = String.class, notes = "Permitted user roles: Permit All")
+    @GetMapping("/{thorWalletRecordId")
+    public String getThorWalletAddress(@PathVariable UUID thorWalletRecordId) {
+        return walletRecordService.getThorWalletAddress(thorWalletRecordId);
+    }
+
     //UPDATE
 
     //ASSIGN A TERRA WALLET TO A THOR WALLET

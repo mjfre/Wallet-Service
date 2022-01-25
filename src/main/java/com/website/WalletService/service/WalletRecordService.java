@@ -1,6 +1,5 @@
 package com.website.WalletService.service;
 
-import com.website.WalletService.exception.ApiRequestException;
 import com.website.WalletService.repository.WalletRecordRepository;
 import com.website.WalletService.repository.dto.ThorWalletRecord;
 import org.springframework.stereotype.Service;
@@ -44,6 +43,12 @@ public class WalletRecordService {
         return walletRecordRepository.selectAllThorWalletRecords();
     }
 
+    public String getThorWalletAddress(UUID thorWalletRecordId) {
+        return walletRecordRepository.selectThorWalletAddress(thorWalletRecordId);
+    }
+
+    //UPDATE
+
     public UUID assignTerraAddressToThorAddress(String terraWalletAddress) {
         //Check if terra wallet address was previously submitted
         if (walletRecordRepository.existsThorWalletRecord(terraWalletAddress)) {
@@ -58,6 +63,8 @@ public class WalletRecordService {
         //Return the id for that record
         return walletRecordRepository.selectThorWalletRecordId(terraWalletAddress);
     }
+
+    //DELETE
 
     public int deleteThorWalletRecord(UUID thorWalletRecordId) {
         return walletRecordRepository.deleteThorWalletRecord(thorWalletRecordId);

@@ -29,6 +29,8 @@ public class WalletRecordRepository {
 
     static final String SELECT_ID_BY_TERRA_WALLET_ADDRESS_SQL = "SELECT id FROM thor_wallet_record WHERE terra_wallet_address = ?";
 
+    static final String SELECT_THOR_WALLET_ADDRESS_BY_ID_SQL = "SELECT thor_wallet_address FROM thor_wallet_record WHERE id = ?";
+
     static final String SELECT_UNUSED_THOR_ADDRESS_SQL = "SELECT thor_wallet_address FROM thor_wallet_record WHERE terra_wallet_address = null LIMIT 1";
 
     static final String UPDATE_TERRA_WALLET_ADDRESS_BY_THOR_WALLET_ADDRESS_SQL = "" +
@@ -83,6 +85,10 @@ public class WalletRecordRepository {
         catch(EmptyResultDataAccessException e){
             throw new ApiRequestException("There are no unassigned thor wallet addresses remaining");
         }
+    }
+
+    public String selectThorWalletAddress(UUID thorWalletRecordId) {
+        return jdbcTemplate.queryForObject(SELECT_THOR_WALLET_ADDRESS_BY_ID_SQL, mapThorWalletAddressFromDb(), thorWalletRecordId);
     }
 
     //UPDATE

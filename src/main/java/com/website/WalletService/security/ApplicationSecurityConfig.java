@@ -63,6 +63,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(
                         "/login",
                         "/wallet-record",
+                        "/wallet-record/**",
                         //swagger urls
                         "/",
                         "/swagger-ui.html",
