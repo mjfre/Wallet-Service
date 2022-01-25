@@ -44,7 +44,6 @@ public class WalletRecordService {
         return walletRecordRepository.selectAllThorWalletRecords();
     }
 
-
     public UUID assignTerraAddressToThorAddress(String terraWalletAddress) {
         //Check if terra wallet address was previously submitted
         if (walletRecordRepository.existsThorWalletRecord(terraWalletAddress)) {

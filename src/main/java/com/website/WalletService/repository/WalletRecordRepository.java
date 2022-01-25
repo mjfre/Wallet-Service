@@ -45,12 +45,17 @@ public class WalletRecordRepository {
     //CREATE
 
     public int insertThorWalletRecord(ThorWalletRecord thorWalletRecord) {
-        return jdbcTemplate.update(
-                INSERT_THOR_WALLET_RECORD_SQL,
-                thorWalletRecord.getId(),
-                thorWalletRecord.getThorWalletAddress(),
-                thorWalletRecord.getTerraWalletAddress()
-        );
+        try {
+            return jdbcTemplate.update(
+                    INSERT_THOR_WALLET_RECORD_SQL,
+                    thorWalletRecord.getId(),
+                    thorWalletRecord.getThorWalletAddress(),
+                    thorWalletRecord.getTerraWalletAddress()
+            );
+        }
+        catch(Exception e){
+            throw new ApiRequestException("Wallet address already exists in database");
+        }
     }
 
     //READ
