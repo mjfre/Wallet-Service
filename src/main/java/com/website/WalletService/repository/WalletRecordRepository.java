@@ -23,7 +23,7 @@ public class WalletRecordRepository {
             "VALUES (?, ?, ?)";
 
 
-    static final String SELECT_ALL_THOR_WALLET_RECORDS_SQL = "SELECT * FROM student";
+    static final String SELECT_ALL_THOR_WALLET_RECORDS_SQL = "SELECT * FROM thor_wallet_record";
 
     static final String EXISTS_BY_TERRA_WALLET_ADDRESS_SQL = "SELECT EXISTS ( SELECT 1 FROM thor_wallet_record WHERE terra_wallet_address = ? )";
 
