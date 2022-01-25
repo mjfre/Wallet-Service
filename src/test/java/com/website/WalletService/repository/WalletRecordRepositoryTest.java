@@ -111,6 +111,22 @@ class WalletRecordRepositoryTest {
     }
 
     @Test
+    void whenSelectThorAddressByRecordId_thenReturnThorAddress() {
+        //given
+        UUID thorWalletRecordId = UUID.randomUUID();
+        String expectedThorWalletAddress = "THOR_WALLET_ADDRESS";
+
+        when(jdbcTemplate.queryForObject(WalletRecordRepository.SELECT_THOR_WALLET_ADDRESS_BY_ID_SQL, walletRecordRepository.mapThorWalletAddressFromDb(), thorWalletRecordId))
+                .thenReturn(expectedThorWalletAddress);
+
+        //when
+        String actualThorWalletAddress = walletRecordRepository.selectThorWalletAddress(thorWalletRecordId);
+
+        //then
+        assertEquals(expectedThorWalletAddress, actualThorWalletAddress);
+    }
+
+    @Test
     void whenExistsThorWalletRecord_thenReturnTrue() {
         //given
         String terraWalletAddress = "TERRA_WALLET_ADDRESS";

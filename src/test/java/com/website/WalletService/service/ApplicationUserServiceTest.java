@@ -116,12 +116,6 @@ class ApplicationUserServiceTest {
         assertEquals(expectedApplicationUserDOs, actualApplicationUserDOs);
     }
 
-
-
-
-
-
-
     @Test
     void whenDeleteApplicationUserByUsername_thenDeleteAnyPasswordResetTokenAndReturnNumRowsChanged() {
         //given

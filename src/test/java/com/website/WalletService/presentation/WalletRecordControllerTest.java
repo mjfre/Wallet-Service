@@ -85,6 +85,22 @@ class WalletRecordControllerTest {
     }
 
     @Test
+    void whenGetThorAddressByRecordId_thenReturnThorAddress() {
+        //given
+        UUID thorWalletRecordId = UUID.randomUUID();
+        String expectedThorWalletAddress = "THOR_WALLET_ADDRESS";
+
+        when(walletRecordService.getThorWalletAddress(thorWalletRecordId))
+                .thenReturn(expectedThorWalletAddress);
+
+        //when
+        String actualThorWalletAddress = walletRecordController.getThorWalletAddress(thorWalletRecordId);
+
+        //then
+        assertEquals(expectedThorWalletAddress, actualThorWalletAddress);
+    }
+
+    @Test
     void whenAssignTerraAddressToThorAddress_thenReturn() {
         //given
         String terraWalletAddress = "TERRA_WALLET_ADDRESS";
