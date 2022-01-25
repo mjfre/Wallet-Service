@@ -31,7 +31,7 @@ public class WalletRecordRepository {
 
     static final String SELECT_THOR_WALLET_ADDRESS_BY_ID_SQL = "SELECT thor_wallet_address FROM thor_wallet_record WHERE id = ?";
 
-    static final String SELECT_UNUSED_THOR_ADDRESS_SQL = "SELECT thor_wallet_address FROM thor_wallet_record WHERE terra_wallet_address = null LIMIT 1";
+    static final String SELECT_UNUSED_THOR_ADDRESS_SQL = "SELECT thor_wallet_address FROM thor_wallet_record WHERE terra_wallet_address IS NULL LIMIT 1";
 
     static final String UPDATE_TERRA_WALLET_ADDRESS_BY_THOR_WALLET_ADDRESS_SQL = "" +
             "UPDATE thor_wallet_record " +

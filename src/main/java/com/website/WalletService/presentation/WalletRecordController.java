@@ -54,8 +54,9 @@ public class WalletRecordController {
     //GET THOR WALLET ADDRESS BY RECORD ID
     @PreAuthorize("permitAll()")
     @ApiOperation(value = "Get all a Thor wallet address by record id", response = String.class, notes = "Permitted user roles: Permit All")
-    @GetMapping("/{thorWalletRecordId")
+    @GetMapping("/{thorWalletRecordId}")
     public String getThorWalletAddress(@PathVariable UUID thorWalletRecordId) {
+        System.out.println(thorWalletRecordId);
         return walletRecordService.getThorWalletAddress(thorWalletRecordId);
     }
 
