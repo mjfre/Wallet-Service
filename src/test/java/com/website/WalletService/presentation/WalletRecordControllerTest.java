@@ -1,6 +1,7 @@
 package com.website.WalletService.presentation;
 
 import com.website.WalletService.domain.ApplicationUserDO;
+import com.website.WalletService.exception.ApiRequestException;
 import com.website.WalletService.repository.dto.ApplicationUser;
 import com.website.WalletService.repository.dto.ThorWalletRecord;
 import com.website.WalletService.security.ApplicationUserRole;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 class WalletRecordControllerTest {
@@ -98,8 +100,8 @@ class WalletRecordControllerTest {
         assertEquals(expectedThorWalletRecordId, actualThorWalletRecordId);
     }
 
-    @Test
-    void whenDeleteThorWalletRecord_thenReturnNumRowsChanged() {
+//    @Test
+//    void whenDeleteThorWalletRecord_thenReturnNumRowsChanged() {
 //        //given
 //        UUID thorWalletRecordId = UUID.randomUUID();
 //        int expectedNumRowsChanged = 1;
@@ -112,5 +114,20 @@ class WalletRecordControllerTest {
 //
 //        //then
 //        assertEquals(expectedNumRowsChanged, actualNumRowsChanged);
+//    }
+
+    @Test
+    void givenEndpointDisabled_whenDeleteThorWalletRecord_thenReturnNumRowsChanged() {
+        //given
+        UUID thorWalletRecordId = UUID.randomUUID();
+        int expectedNumRowsChanged = 1;
+
+        when(walletRecordService.deleteThorWalletRecord(thorWalletRecordId))
+                .thenReturn(expectedNumRowsChanged);
+
+        //when
+        //then
+        Throwable exceptionThrown = assertThrows(ApiRequestException.class, () -> walletRecordController.deleteThorWalletRecord(thorWalletRecordId));
+        assertEquals(exceptionThrown.getMessage(), "This endpoint has been disabled");
     }
 }

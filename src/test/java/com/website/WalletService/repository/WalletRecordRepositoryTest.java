@@ -63,6 +63,27 @@ class WalletRecordRepositoryTest {
     }
 
     @Test
+    void givenAddressAlreadyExistsInDb_whenInsertThorWalletRecord_thenReturnNumRowsChanged() {
+        //given
+        ThorWalletRecord thorWalletRecord = new ThorWalletRecord(
+                UUID.randomUUID(),
+                "THOR_WALLET_ADDRESS",
+                "TERRA_WALLET_ADDRESS"
+        );
+
+        when(jdbcTemplate.update(WalletRecordRepository.INSERT_THOR_WALLET_RECORD_SQL,
+                thorWalletRecord.getId(),
+                thorWalletRecord.getThorWalletAddress(),
+                thorWalletRecord.getTerraWalletAddress()))
+                .thenThrow(new RuntimeException("Wallet address already exists in database"));
+
+        //when
+        //then
+        Throwable exceptionThrown = assertThrows(RuntimeException.class, () ->  walletRecordRepository.insertThorWalletRecord(thorWalletRecord));
+        assertEquals("Wallet address already exists in database", exceptionThrown.getMessage());
+    }
+
+    @Test
     void whenSelectAllThorWalletRecords_thenReturnThorWalletRecords() {
         //given
         List<ThorWalletRecord> expectedThorWalletRecords =
